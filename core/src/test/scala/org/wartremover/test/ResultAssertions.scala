@@ -1,7 +1,6 @@
-package io.omervk.wartremover.spark.test
+package org.wartremover.test
 
 import org.scalatest.Assertions
-import org.wartremover.test.WartTestTraverser
 
 trait ResultAssertions extends Assertions {
 
