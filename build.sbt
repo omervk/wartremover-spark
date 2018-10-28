@@ -87,6 +87,7 @@ lazy val tests = project.in(file("tests"))
   )
 
 lazy val sbtPlug: Project = project.in(file("sbt-plugin"))
+  .withId("sbt-plugin")
   .settings(commonSettings)
   .settings(
     commonSettings,

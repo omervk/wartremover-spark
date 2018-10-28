@@ -9,11 +9,17 @@
 Add the following to your `project/plugins.sbt`:
 
 ```scala
-addSbtPlugin("com.omervk" % "sbt-wartremover-spark" % "0.0.1")
+resolvers += Resolver.bintrayIvyRepo("omervk", "wartremover-spark")
+
+libraryDependencies += "com.omervk" %% "wartremover-spark" % "0.0.3"
+addSbtPlugin("com.omervk" % "sbt-wartremover-spark" % "0.0.3")
 ```
 
+(this is pending a release into the default sbt-plugins repo)
+
+And in your `build.sbt`:
+
 ```scala
-// In build.sbt
 wartremoverErrors ++= SparkWart.All
 // Or alternatively
 wartremoverErrors += SparkWart.UnserializableCapture
