@@ -1,34 +1,35 @@
 sudo: false
+
 language: scala
+
 scala:
 #  - 2.10.7
   - 2.11.12
   - 2.12.7
 #  - 2.13.0-M5
+
 jdk:
-  - oraclejdk8
-#matrix:
-#  include:
-#    - scala: 2.12.7
-#      jdk: openjdk11
-#    - scala: scripted-test
-#      jdk: oraclejdk8
-#      env: SCRIPT=";+ core/publishLocal;+ sbt-plugin/scripted"
-#      script:
-#      - sbt "${SCRIPT}"
-#  exclude:
-#    - scala: 2.12.7
-#      jdk: openjdk7
-#    - scala: 2.13.0-M5
-#      jdk: openjdk7
+  - openjdk11
+
+matrix:
+  # We only test in Scala 2.11 since it's the version Spark uses.
+  # This shouldn't be the case since we'll run in 2.12 while in the addon.
+  include:
+    - scala: 2.11.12
+      env: SCRIPT="test"
+    - scala: 2.12.7
+      env: SCRIPT="compile"
+
 script:
-  - sbt ++$TRAVIS_SCALA_VERSION test
+  - sbt ++$TRAVIS_SCALA_VERSION $SCRIPT
   - git diff --exit-code # check scalariform
+
 cache:
   directories:
     # These directories are cached to S3 at the end of the build
     - $HOME/.ivy2/cache
     - $HOME/.sbt
+
 before_cache:
   # Cleanup the cached directories to avoid unnecessary cache updates
   - find $HOME/.ivy2/cache -name "ivydata-*.properties" -print -delete

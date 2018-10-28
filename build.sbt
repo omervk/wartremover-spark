@@ -67,7 +67,6 @@ lazy val core = project.in(file("core"))
           libraryDependencies.value
       }
     },
-    scalaVersion := scala211,
     crossScalaVersions := Seq(/*scala210, scala211, scala213 */ scala211, scala212),
     libraryDependencies ++= Seq(
       "org.wartremover" %% "wartremover" % wartremoverVersion
