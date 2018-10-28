@@ -9,7 +9,7 @@ scala:
 #  - 2.13.0-M5
 
 jdk:
-  - openjdk11
+  - oraclejdk8
 
 matrix:
   # We only test in Scala 2.11 since it's the version Spark uses.
@@ -18,7 +18,7 @@ matrix:
     - scala: 2.11.12
       env: SCRIPT="test"
     - scala: 2.12.7
-      env: SCRIPT="compile"
+      env: SCRIPT="'project core' compile 'project sbt-plugin' compile"
 
 script:
   - sbt ++$TRAVIS_SCALA_VERSION $SCRIPT
