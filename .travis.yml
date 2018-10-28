@@ -1,33 +1,35 @@
 sudo: false
 language: scala
 scala:
-  - 2.10.7
+#  - 2.10.7
   - 2.11.12
   - 2.12.7
-  - 2.13.0-M5
+#  - 2.13.0-M5
 jdk:
-  - openjdk7
   - oraclejdk8
-matrix:
-  include:
-    - scala: 2.12.7
-      jdk: openjdk11
-    - scala: scripted-test
-      jdk: oraclejdk8
-      env: SCRIPT=";+ core/publishLocal;+ sbt-plugin/scripted"
-      script:
-      - sbt "${SCRIPT}"
-  exclude:
-    - scala: 2.12.7
-      jdk: openjdk7
-    - scala: 2.13.0-M5
-      jdk: openjdk7
+#matrix:
+#  include:
+#    - scala: 2.12.7
+#      jdk: openjdk11
+#    - scala: scripted-test
+#      jdk: oraclejdk8
+#      env: SCRIPT=";+ core/publishLocal;+ sbt-plugin/scripted"
+#      script:
+#      - sbt "${SCRIPT}"
+#  exclude:
+#    - scala: 2.12.7
+#      jdk: openjdk7
+#    - scala: 2.13.0-M5
+#      jdk: openjdk7
 script:
-- sbt "+++$TRAVIS_SCALA_VERSION compile" "+++$TRAVIS_SCALA_VERSION test"
-- git diff --exit-code # check scalariform
+  - sbt ++$TRAVIS_SCALA_VERSION test
+  - git diff --exit-code # check scalariform
 cache:
   directories:
-  - "$HOME/.ivy2/cache"
-  - "$HOME/.sbt/launchers"
+    # These directories are cached to S3 at the end of the build
+    - $HOME/.ivy2/cache
+    - $HOME/.sbt
 before_cache:
-- find $HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
+  # Cleanup the cached directories to avoid unnecessary cache updates
+  - find $HOME/.ivy2/cache -name "ivydata-*.properties" -print -delete
+  - find $HOME/.sbt        -name "*.lock"               -print -delete
