@@ -19,6 +19,9 @@ matrix:
       env: SCRIPT="test"
     - scala: 2.12.7
       env: SCRIPT="'project core' compile 'project sbt-plugin' compile"
+  exclude:
+    - scala: 2.11.12
+    - scala: 2.12.7
 
 script:
   - sbt ++$TRAVIS_SCALA_VERSION $SCRIPT
