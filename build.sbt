@@ -13,11 +13,10 @@ lazy val commonSettings: Seq[Setting[_]] = Seq(
       url("http://www.apache.org/licenses/LICENSE-2.0.txt")
   ),
   publishMavenStyle := false,
-  publishArtifact in Test := false,
-  bintrayRepository := name.value,
+  bintrayRepository := "wartremover-spark",
   bintrayOrganization in bintray := None,
   bintrayVcsUrl := Some("git@github.com:omervk/wartremover-spark.git"),
-  homepage := None,
+//  homepage := None,
 //  useGpg := true,
   pomExtra :=
     <scm>
@@ -47,7 +46,6 @@ lazy val root = project.in(file("."))
 def macroParadiseVersion = "2.1.1"
 
 lazy val core = project.in(file("core"))
-  .withId("core")
   .settings(commonSettings)
   .settings(
     name := "wartremover-spark",
@@ -70,18 +68,25 @@ lazy val core = project.in(file("core"))
       }
     },
     scalaVersion := scala211,
-    crossScalaVersions := Seq(/*scala210, scala213*/ scala211, scala212),
+    crossScalaVersions := Seq(/*scala210, scala211, scala213 */ scala211, scala212),
     libraryDependencies ++= Seq(
       "org.wartremover" %% "wartremover" % wartremoverVersion
-    ),
+    )
+  )
+
+lazy val tests = project.in(file("tests"))
+  .dependsOn(core)
+  .settings(commonSettings)
+  .settings(
+    publish := {},
+    scalaVersion := scala211,
     libraryDependencies ++= Seq(
       "org.apache.spark" %% "spark-sql" % "2.3.2" % Test,
-      "org.scalatest" %% "scalatest" % "3.0.6-SNAP3" % Test
+      "org.scalatest" %% "scalatest" % "3.0.5" % Test
     )
   )
 
 lazy val sbtPlug: Project = project.in(file("sbt-plugin"))
-  .withId("sbt-plugin")
   .settings(commonSettings)
   .settings(
     commonSettings,

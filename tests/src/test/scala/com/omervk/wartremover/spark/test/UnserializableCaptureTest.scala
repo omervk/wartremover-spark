@@ -1,9 +1,9 @@
 package com.omervk.wartremover.spark.test
 
 import com.omervk.wartremover.spark.warts.UnserializableCapture
-import org.scalatest.{BeforeAndAfterAll, FunSuite}
-import org.wartremover.test.{ResultAssertions, WartTestTraverser}
-import org.apache.spark.sql.{Dataset, SparkSession}
+import org.scalatest.{ BeforeAndAfterAll, FunSuite }
+import org.wartremover.test.{ ResultAssertions, WartTestTraverser }
+import org.apache.spark.sql.{ Dataset, SparkSession }
 
 import scala.util.Random
 
