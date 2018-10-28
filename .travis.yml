@@ -5,7 +5,7 @@ language: scala
 scala:
 #  - 2.10.7
   - 2.11.12
-  - 2.12.7
+#  - 2.12.7
 #  - 2.13.0-M5
 
 jdk:
@@ -14,17 +14,17 @@ jdk:
 matrix:
   # We only test in Scala 2.11 since it's the version Spark uses.
   # This shouldn't be the case since we'll run in 2.12 while in the addon.
-  include:
-    - scala: 2.11.12
-      env: SCRIPT="test"
-    - scala: 2.12.7
-      env: SCRIPT="'project core' compile 'project sbt-plugin' compile"
-  exclude:
-    - scala: 2.11.12
-    - scala: 2.12.7
+#  include:
+#    - scala: 2.11.12
+#      env: SCRIPT="test"
+#    - scala: 2.12.7
+#      env: SCRIPT="'project core' compile 'project sbt-plugin' compile"
+#  exclude:
+#    - scala: 2.11.12
+#    - scala: 2.12.7
 
 script:
-  - sbt ++$TRAVIS_SCALA_VERSION $SCRIPT
+  - sbt ++$TRAVIS_SCALA_VERSION test
   - git diff --exit-code # check scalariform
 
 cache:
