@@ -33,7 +33,7 @@ lazy val commonSettings: Seq[Setting[_]] = Seq(
 
 lazy val root = project.in(file("."))
   .withId("wartremover-spark")
-  .aggregate(core, sbtPlug)
+  .aggregate(core, tests, sbtPlug)
   .settings(commonSettings)
   .settings(
     publishArtifact := false,
